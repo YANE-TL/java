@@ -1,91 +1,12 @@
-package com.test;
+第一个实验
+模块化设计的过程
+目标：设计并实现一个用于产生四则运算的软件，功能包括产生算式、试题批改、算式导出和算式导入、显示运算的结果、统计成绩分析，考虑使用数据库实现软件和数据库的链接，最终软件通过三层构架的模式实现。
+知识掌握：
+类和接口的使用、文件的读写、JDBC编程、java-swing界面设计、软件构造中模块化设计的分析方法。
+实现效果：
 
-import java.util.Random;
-
-public abstract class Equation {
-	final static int MAX=100,MIN=0;
-	private int left,right,result;
-	private char op;
-
-	public int getLeft() {
-		return left;
-	}
-	public void setLeft(int left) {
-		this.left = left;
-	}
-	public int getRight() {
-		return right;
-	}
-	public void setRight(int right) {
-		this.right = right;
-	}
-	public int getResult() {
-		return result;
-	}
-	public void setResult(int result) {
-		this.result = result;
-	}
-	public char getOp() {
-		return op;
-	}
-	public void setOp(char op) {
-		this.op = op;
-	}
-	public  String toString() {
-		return  ""+left+op+right+"="+result+"   ";
-	}
-	public int generateRandom(int max,int min){
-		Random r=new Random();
-		return r.nextInt(max-min+1)+min;
-	}
-	public boolean isBetween(int value,int max,int min){
-		return value>=min&&value<=max;
-	}
-	//用于计算算式的结果，但是此方法的具体计算过程由实现类来决定
-    protected abstract int calculate() ;
-    //产生算式，算式的符号又调用者决定
-    public void generateEquation(char op) {
-    	do {
-    		left=generateRandom(MAX, MIN);
-    		right=generateRandom(MAX, MIN);
-    		result=calculate();
-    	}while(!isBetween(result, MAX, MIN));
-    	this.setOp(op);
-    }
-    
-	
-    public boolean isEqual(Equation e) {
-    	boolean flag=false;
-		if(this.getOp()!=e.getOp()){
-			flag=false;
-		}else if(this.getRight()==e.getRight()&&this.getLeft()==e.getLeft()){
-			flag=true;
-		}else{
-			flag=false;
-		}
-		return flag;
-
-   }
-}
-
-
-
-
-
-public class SubEquation extends Equation {
-    //用于产生减法算式
-	public SubEquation() {
-		
-	}
-	//将表示为减法算式的字符串转换为一个减法算式对象 “3-2”
-	public SubEquation(String s) {
-		
-	}
-
-	@Override
-	protected int calculate() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-}
+课程目标：
+一、请自己思考设计能够产生50个随机习题并显示产生的算式和结果、要求算式实现加法和减法运算，计算数值0-100之间，结算结果也在0-100之间；
+二、思考如果产生的算式要求增加乘法和除法，或者只包含乘法和除法，产生的算式是100个，那么程序应该如何修改？你设计的程序合理吗？如何改进？
+三、模块化设计实现上述程序，请重新设计你的程序。比较两个程序，哪个更好？为什么？
+定义下图四个方法，将功能进行拆解（模块化设计），实现同样的功能。
