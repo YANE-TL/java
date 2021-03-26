@@ -1,1 +1,91 @@
+package com.test;
 
+import java.util.Random;
+
+public abstract class Equation {
+	final static int MAX=100,MIN=0;
+	private int left,right,result;
+	private char op;
+
+	public int getLeft() {
+		return left;
+	}
+	public void setLeft(int left) {
+		this.left = left;
+	}
+	public int getRight() {
+		return right;
+	}
+	public void setRight(int right) {
+		this.right = right;
+	}
+	public int getResult() {
+		return result;
+	}
+	public void setResult(int result) {
+		this.result = result;
+	}
+	public char getOp() {
+		return op;
+	}
+	public void setOp(char op) {
+		this.op = op;
+	}
+	public  String toString() {
+		return  ""+left+op+right+"="+result+"   ";
+	}
+	public int generateRandom(int max,int min){
+		Random r=new Random();
+		return r.nextInt(max-min+1)+min;
+	}
+	public boolean isBetween(int value,int max,int min){
+		return value>=min&&value<=max;
+	}
+	//用于计算算式的结果，但是此方法的具体计算过程由实现类来决定
+    protected abstract int calculate() ;
+    //产生算式，算式的符号又调用者决定
+    public void generateEquation(char op) {
+    	do {
+    		left=generateRandom(MAX, MIN);
+    		right=generateRandom(MAX, MIN);
+    		result=calculate();
+    	}while(!isBetween(result, MAX, MIN));
+    	this.setOp(op);
+    }
+    
+	
+    public boolean isEqual(Equation e) {
+    	boolean flag=false;
+		if(this.getOp()!=e.getOp()){
+			flag=false;
+		}else if(this.getRight()==e.getRight()&&this.getLeft()==e.getLeft()){
+			flag=true;
+		}else{
+			flag=false;
+		}
+		return flag;
+
+   }
+}
+
+
+
+
+
+public class SubEquation extends Equation {
+    //用于产生减法算式
+	public SubEquation() {
+		
+	}
+	//将表示为减法算式的字符串转换为一个减法算式对象 “3-2”
+	public SubEquation(String s) {
+		
+	}
+
+	@Override
+	protected int calculate() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+}
